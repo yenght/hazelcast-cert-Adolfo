@@ -1,0 +1,39 @@
+<hazelcast
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.hazelcast.com/schema/config
+                               http://www.hazelcast.com/schema/config/hazelcast-config-3.11.xsd"
+	xmlns="http://www.hazelcast.com/schema/config">
+
+	<properties>
+		<property name="hazelcast.discovery.enabled">true</property>
+		<property name="hazelcast.partition.count">523</property>
+	</properties>
+
+	<partition-group enabled="true" group-type="ZONE_AWARE"/>
+
+	<network>
+		<join>
+			<tcp-ip enabled="false"></tcp-ip>
+			<multicast enabled="false"></multicast>
+			<aws enabled="false"></aws>
+			<discovery-strategies>
+				<discovery-strategy enabled="true" class="com.hazelcast.aws.AwsDiscoveryStrategy">
+					<properties>
+						<property name="access-key"></property>
+						<property name="secret-key"></property>
+						<property name="region"></property>
+						<property name="security-group-name"></property>
+						<property name="tag-key"></property>
+						<property name="tag-value"></property>
+					</properties>	
+				</discovery-strategy>
+			</discovery-strategies>
+		</join>
+	</network>
+
+	<map name="imdgCC">
+	    <in-memory-format>OBJECT</in-memory-format>
+		<backup-count>0</backup-count>
+		<async-backup-count>1</async-backup-count>
+	</map>
+</hazelcast>
