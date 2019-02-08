@@ -27,12 +27,11 @@ public class IMDGCertification {
 		try {
 			// Get the map
 			Map<String, List<Transaction>> imdgCC = hzInstance.getMap("imdgCC");
-			log.info("imdgCC Map adquired");
+            log.info("imdgCC Map adquired with current size: " + imdgCC.size());
 
 		} catch (Exception e) {
-			log.severe("Something went wrong getting the map");
+			log.severe("Something went wrong getting the map", e);
 			hzInstance.shutdown();
 		}
 	}
-
 }

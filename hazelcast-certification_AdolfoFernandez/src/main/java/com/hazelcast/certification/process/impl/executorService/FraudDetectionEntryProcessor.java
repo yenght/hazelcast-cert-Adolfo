@@ -7,13 +7,14 @@ import java.util.Map.Entry;
 import com.hazelcast.certification.business.ruleengine.RuleEngine;
 import com.hazelcast.certification.domain.Result;
 import com.hazelcast.certification.domain.Transaction;
+import com.hazelcast.core.Offloadable;
 import com.hazelcast.map.EntryBackupProcessor;
 import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.DataSerializable;
 
-public class FraudDetectionEntryProcessor implements EntryProcessor<String, List<Transaction>>, EntryBackupProcessor<String, List<Transaction>>, DataSerializable {
+public class FraudDetectionEntryProcessor implements EntryProcessor<String, List<Transaction>>, EntryBackupProcessor<String, List<Transaction>>, DataSerializable, Offloadable {
 
 	private static final long serialVersionUID = 1L;
 	private static final int MIN_HIST_TRANS = 20;
@@ -48,7 +49,7 @@ public class FraudDetectionEntryProcessor implements EntryProcessor<String, List
 				tranxResult.setFraudTransaction(myRE.isFraudTxn());
 			}
 
-			// Add the transaction to it's historical
+			// Add the transaction to its historical
 			value.add(tranx);
 			entry.setValue(value);
 		}
@@ -80,5 +81,8 @@ public class FraudDetectionEntryProcessor implements EntryProcessor<String, List
 		this.tranx = tranx;
 	}
 
-
+	@Override
+	public String getExecutorName() {
+		return Offloadable.OFFLOADABLE_EXECUTOR;
+	}
 }

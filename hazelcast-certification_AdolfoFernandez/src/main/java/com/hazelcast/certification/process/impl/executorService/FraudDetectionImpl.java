@@ -26,6 +26,7 @@ public class FraudDetectionImpl extends FraudDetection {
 		// Get the map where the credits cards and its transactions are stored
     	HazelcastInstance hzClient = HazelcastClient.newHazelcastClient();
 		IMap<String, List<Transaction>> imdgCC = hzClient.getMap("imdgCC");
+        log.info("imdgCC Map adquired with current size: " + imdgCC.size());
 
 		try {
 
@@ -64,12 +65,10 @@ public class FraudDetectionImpl extends FraudDetection {
 			}
 
 		} catch (Exception e) {
-			log.severe("Error loading historical transactions", e);
+			log.severe("Error detecting fraud", e);
 		} finally {
 			hzClient.shutdown();
 		}
 	}
-
-
 
 }

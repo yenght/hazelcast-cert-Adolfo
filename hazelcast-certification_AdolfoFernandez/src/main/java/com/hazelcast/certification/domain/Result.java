@@ -2,14 +2,14 @@ package com.hazelcast.certification.domain;
 
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
-import com.hazelcast.nio.serialization.DataSerializable;
+import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
 
 import java.io.IOException;
 
 /**
  * Created by rahul on 07/08/15.
  */
-public class Result implements DataSerializable {
+public class Result implements IdentifiedDataSerializable {
 
     private boolean fraudTransaction;
     private String creditCardNumber;
@@ -41,6 +41,16 @@ public class Result implements DataSerializable {
     public void readData(ObjectDataInput objectDataInput) throws IOException {
         creditCardNumber = objectDataInput.readUTF();
         fraudTransaction = objectDataInput.readBoolean();
+    }
+    
+    @Override
+    public int getFactoryId() { 
+      return ResultDataSerializableFactory.FACTORY_ID;
+    }
+    
+    @Override
+    public int getId() { 
+      return ResultDataSerializableFactory.RESULT_TYPE;
     }
 }
 

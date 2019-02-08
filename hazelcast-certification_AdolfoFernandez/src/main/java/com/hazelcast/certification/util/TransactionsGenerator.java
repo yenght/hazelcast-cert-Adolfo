@@ -56,7 +56,7 @@ public class TransactionsGenerator implements Runnable {
     private final static long TIMEOUT = 10000;
     private int TEST_DURATION = 120;
     private boolean TEST_STARTED;
-    private final static int MAX_CREDITCARD_COUNT = 30000000;
+//    private final static int MAX_CREDITCARD_COUNT = 30000000;
 
 	private AtomicBoolean showStopper = new AtomicBoolean();
     private int COUNT_TRACKER;
@@ -247,7 +247,7 @@ public class TransactionsGenerator implements Runnable {
     }
 
     private int getNextCounter() {
-        if(COUNT_TRACKER == MAX_CREDITCARD_COUNT) {
+        if(COUNT_TRACKER == Const.TOTAL_NUM_CC) {
             COUNT_TRACKER = 0;
             if(RANDOM_VALUES) {
                 TXNCOUNTER = new Random(1);
@@ -255,7 +255,7 @@ public class TransactionsGenerator implements Runnable {
         }
         if(RANDOM_VALUES) {
             ++COUNT_TRACKER;
-            return TXNCOUNTER.nextInt(MAX_CREDITCARD_COUNT);
+            return TXNCOUNTER.nextInt(Const.TOTAL_NUM_CC);
         }
         return ++COUNT_TRACKER;
     }
