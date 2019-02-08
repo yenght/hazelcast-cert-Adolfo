@@ -9,15 +9,14 @@
   
 	<network>
 		<discovery-strategies>
-        <!-- class equals to the DiscoveryStrategy not the factory! -->
 			<discovery-strategy enabled="true" class="com.hazelcast.aws.AwsDiscoveryStrategy">
 				<properties>
-					<property name="access-key"></property>
-					<property name="secret-key"></property>
-					<property name="region"></property>
-					<property name="security-group-name"></property>
-					<property name="tag-key"></property>
-					<property name="tag-value"></property>
+					<property name="access-key">ACCESS_KEY</property>
+					<property name="secret-key">SECRET_KEY</property>
+					<property name="region">REGION</property>
+					<property name="security-group-name">SECURITY_GROUP</property>
+					<property name="tag-key">TAG_KEY</property>
+					<property name="tag-value">TAG_VALUE</property>
 				</properties>
 			</discovery-strategy>
 		</discovery-strategies>
@@ -38,12 +37,16 @@
 		<ssl enabled="false" />
 	</network>
 	<load-balancer type="random" />
-<!-- 
-	<near-cache name="nearcache-test">
-		<max-idle-seconds>5</max-idle-seconds>
-		<eviction-policy>LRU</eviction-policy>
-		<in-memory-format>OBJECT</in-memory-format>
-		<cache-local-entries>false</cache-local-entries>
-	</near-cache> -->
+
+	<serialization>
+		<data-serializable-factories>
+			<data-serializable-factory factory-id="1">
+        		com.hazelcast.certification.domain.ResultDataSerializableFactory
+	      	</data-serializable-factory>
+			<data-serializable-factory factory-id="2">
+        		com.hazelcast.certification.domain.TransactionDataSerializableFactory
+	      	</data-serializable-factory>
+		</data-serializable-factories>
+	</serialization>
 	
 </hazelcast-client>

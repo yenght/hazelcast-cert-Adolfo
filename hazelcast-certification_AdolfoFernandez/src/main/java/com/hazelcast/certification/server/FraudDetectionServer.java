@@ -58,7 +58,10 @@ public class FraudDetectionServer {
 	private ByteBuffer clientBuffer;
 	private final static int BUFFER_SIZE = 100;
 	private static CharsetDecoder decoder = Charset.forName("ASCII").newDecoder();
-
+	
+    private String THREAD_NUMBER;
+    private String BQ_SIZE;
+    
 	public FraudDetectionServer() {
 		setup();
 		loadProperties();
@@ -298,6 +301,22 @@ public class FraudDetectionServer {
 			temp = String.valueOf(5);
 		}
 		System.setProperty("TPSInterval", temp);
+		
+        temp = properties.getProperty("ThreadNumber");
+        if (temp == null) {
+            THREAD_NUMBER = "1";
+        } else {
+            THREAD_NUMBER = temp;
+        }
+		System.setProperty("ThreadNumber", THREAD_NUMBER);
+
+        temp = properties.getProperty("BlockingQueueSize");
+        if (temp == null) {
+            BQ_SIZE = "1";
+        } else {
+        	BQ_SIZE = temp;
+        }
+		System.setProperty("BlockingQueueSize", BQ_SIZE);
 	}
 
 	private void bindQueue() {

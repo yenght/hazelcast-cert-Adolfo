@@ -2,7 +2,7 @@ package com.hazelcast.certification.domain;
 
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
-import com.hazelcast.nio.serialization.DataSerializable;
+import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
  * Object representation of incoming and historical transaction
  *
  */
-public class Transaction implements DataSerializable {
+public class Transaction implements IdentifiedDataSerializable {
 
 	private String creditCardNumber;
 	private long timeStamp;
@@ -141,5 +141,15 @@ public class Transaction implements DataSerializable {
 		txnCode = objectDataInput.readUTF();
 		merchantType = objectDataInput.readUTF();
 		txnCity = objectDataInput.readUTF();
+	}
+
+	@Override
+	public int getFactoryId() {
+	      return TransactionDataSerializableFactory.FACTORY_ID;
+	}
+
+	@Override
+	public int getId() {
+		return TransactionDataSerializableFactory.TRANX_TYPE;
 	}
 }

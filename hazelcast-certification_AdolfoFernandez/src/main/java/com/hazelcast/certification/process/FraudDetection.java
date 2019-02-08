@@ -98,7 +98,7 @@ public abstract class FraudDetection {
 		txn.setTxnAmt(cName[4]);
 		txn.setMerchantType(cName[6]);
 		txn.setTxnCity(cName[7]);
-		txn.setTxnCode(cName[8]);
+		txn.setTxnCode(cName[8].trim()); // Fix a bug with white spaces that runs into a crash for rule46
 		return txn;
 	}
 

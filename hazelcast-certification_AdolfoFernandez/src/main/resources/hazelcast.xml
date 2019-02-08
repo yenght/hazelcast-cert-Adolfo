@@ -4,9 +4,11 @@
                                http://www.hazelcast.com/schema/config/hazelcast-config-3.11.xsd"
 	xmlns="http://www.hazelcast.com/schema/config">
 
+	<license-key>LICENSE-KEY</license-key>
+
 	<properties>
 		<property name="hazelcast.discovery.enabled">true</property>
-		<property name="hazelcast.partition.count">523</property>
+		<property name="hazelcast.partition.count">1049</property>
 	</properties>
 
 	<partition-group enabled="true" group-type="ZONE_AWARE"/>
@@ -19,12 +21,12 @@
 			<discovery-strategies>
 				<discovery-strategy enabled="true" class="com.hazelcast.aws.AwsDiscoveryStrategy">
 					<properties>
-						<property name="access-key"></property>
-						<property name="secret-key"></property>
-						<property name="region"></property>
-						<property name="security-group-name"></property>
-						<property name="tag-key"></property>
-						<property name="tag-value"></property>
+						<property name="access-key">ACCESS_KEY</property>
+						<property name="secret-key">SECRET_KEY</property>
+						<property name="region">REGION</property>
+						<property name="security-group-name">SECURITY_GROUP</property>
+						<property name="tag-key">TAG_KEY</property>
+						<property name="tag-value">TAG_VALUE</property>
 					</properties>	
 				</discovery-strategy>
 			</discovery-strategies>
@@ -32,8 +34,26 @@
 	</network>
 
 	<map name="imdgCC">
-	    <in-memory-format>OBJECT</in-memory-format>
+	    <in-memory-format>NATIVE</in-memory-format>
 		<backup-count>0</backup-count>
 		<async-backup-count>1</async-backup-count>
+		<time-to-live-seconds>0</time-to-live-seconds>
+		<max-idle-seconds>0</max-idle-seconds>
 	</map>
+	
+	<native-memory enabled="true" allocator-type="POOLED">
+		<size value="48" unit="GIGABYTES"/>
+	</native-memory>
+	
+	<serialization>
+		<data-serializable-factories>
+			<data-serializable-factory factory-id="1">
+        		com.hazelcast.certification.domain.ResultDataSerializableFactory
+	      	</data-serializable-factory>
+			<data-serializable-factory factory-id="2">
+        		com.hazelcast.certification.domain.TransactionDataSerializableFactory
+	      	</data-serializable-factory>
+		</data-serializable-factories>
+	</serialization>
+	
 </hazelcast>
